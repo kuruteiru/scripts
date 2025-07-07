@@ -90,10 +90,11 @@ wipe_disk() {
 	parted "$path" mklabel gpt
 
 	echo "$path: main partition"
-	parted -a optimal "$path" mkpart primary ext4 0% 100%
+	partition="${path}1"
+	parted -a optimal "$path" mkpart "$partition" ext4 0% 100%
 
 	echo "$path: creating filesystem"
-	mkfs.ext4 "${path}1"
+	mkfs.ext4 "$partition"
 	
 	# echo "$path: mounting"
 	# mountpoint="$(device_mountpoint "$1")"
