@@ -106,8 +106,8 @@ wipe_disk() {
 wipe_all() {
 	for arg in "$@"; do
 		wipe_disk "$arg" &
-		wait
 	done
+	wait
 	return 0
 }
 
