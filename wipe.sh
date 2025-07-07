@@ -74,21 +74,31 @@ umount_disk() {
 
 # wip
 wipe_disk() {
-	echo "wipe"
-	# dd if=/dev/zero of="$path" bs=10M status=progress
+	path="$(device_path "$1")"
+
+	# echo "$path: unmounting"
+	# umount_disk "$1"
+
+	echo "$path: wiping disk"
+	dd if=/dev/zero of="$path" bs=10M status=progress
+	# dd if=/dev/zero of="$path" bs=10M
+	
+	echo "$path: wiping filesystem"
 	wipefs -a "$path"
 	
-	echo "gpt"
+	echo "$path: creating gpt"
 	parted "$path" mklabel gpt
 
-	echo "part"
+	echo "$path: main partition"
 	parted -a optimal "$path" mkpart primary ext4 0% 100%
 
-	echo "fs"
+	echo "$path: creating filesystem"
 	mkfs.ext4 "${path}1"
-
-	echo "mount"
-	mount "$path" "$mountpoint"
+	
+	# echo "$path: mounting"
+	# mountpoint="$(device_mountpoint "$1")"
+	# mkdir -p "$mountpoint"
+	# mount "$path" "$mountpoint"
 	
 	return 0
 }
