@@ -70,6 +70,15 @@ umount_disk() {
 		echo "$path is mounted"
 		umount "$mountpoint"
 	fi
+	return 0
+}
+
+remove_raids() {
+	# check raids
+	# get raids
+	# loop over them:
+	# mdadm --stop /dev/mdX
+	return 0
 }
 
 # wip
@@ -78,6 +87,9 @@ wipe_disk() {
 
 	# echo "$path: unmounting"
 	# umount_disk "$1"
+	
+	# echo "$path: removing raids"
+	# remove_raids "$1"
 
 	echo "$path: wiping disk"
 	dd if=/dev/zero of="$path" bs=10M status=progress
