@@ -41,5 +41,7 @@ fi
 
 wipe "$@"
 
+# test
+
 echo "success"
 exit 0
