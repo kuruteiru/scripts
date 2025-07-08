@@ -59,6 +59,7 @@ device_mountpoint() {
 umount_disk() {
 	path="$(device_path "$1")"
 
+	# findmnt
 	for part in $path*; do
 		echo "$part"
 	done
@@ -75,9 +76,35 @@ umount_disk() {
 
 remove_raids() {
 	# check raids
+	# mdadm --detail --scan	|| /proc/mdstat
 	# get raids
 	# loop over them:
 	# mdadm --stop /dev/mdX
+	return 0
+}
+
+unfreeze() {
+	# unfreeze disk
+	return 0
+}
+
+health_check() {
+	return 0
+}
+
+bad_disk() {
+	return 0
+}
+
+wipe_nvme() {
+	return 0
+}
+
+wipe_ata() {
+	return 0
+}
+
+wipe_hdd() {
 	return 0
 }
 
@@ -93,7 +120,7 @@ wipe_disk() {
 
 	echo "$path: wiping disk"
 	dd if=/dev/zero of="$path" bs=10M status=progress
-	# dd if=/dev/zero of="$path" bs=10M
+	# hdparm --user-master u --security-set-pass \"$PASSWD\" \"$1\""
 	
 	echo "$path: wiping filesystem"
 	wipefs -a "$path"
